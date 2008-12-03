@@ -1,0 +1,42 @@
+//
+//  ${entity.className}.h
+//  <#ProjectName#>
+//
+//  Created by ${author} on ${date}
+//  Copyright ${year} ${organizationName}. All rights reserved.
+//
+
+{% choose entity.superClassName %}\
+{% when 'NSManagedObject' %}\
+#import <CoreData/CoreData.h>
+{% end %}{# when 'NSManagedObject' #}\
+{% otherwise %}\
+#import "${entity.superClassName}.h"
+{% end %}{# otherwise #}\
+{% end %}{# choose entity.superClassName #}\
+
+#pragma mark begin emogenerator forward declarations
+{% for className in entity.relatedEntityClassNames %}\
+@class ${className};
+{% end %}\
+#pragma mark end emogenerator forward declarations
+
+/** ${entity.name} */
+@interface ${entity.className} : ${entity.superClassName} {
+}
+
+#pragma mark begin emogenerator accessors
+
+// Attributes
+{% for property in entity.attributes %}\
+{% include attribute.h.genshi %}\
+{% end %}{# for property in entity.attributes #}\
+
+// Relationships
+{% for property in entity.relationships %}\
+{% include relationship.h.genshi %}\
+{% end %}{# for property in entity.relationships #}\
+
+#pragma mark end emogenerator accessors
+
+@end

@@ -1,0 +1,9 @@
+{% choose property.isToMany %}\
+{% when True %}\
+- (NSMutableSet *)${property.name};
+{% end %}{# when True #}\
+{% when False %}\
+- (${property.destinationEntityClassNames} *)${property.name};
+- (void)set${firstCharCapitalize(property.name)}:(${property.destinationEntityClassNames} *)in${firstCharCapitalize(property.name)};
+{% end %}{# when False #}\
+{% end %}{# choose property.isToMany #}\

@@ -1,0 +1,1 @@
+from emogenerator import main, emogenerator

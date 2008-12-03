@@ -1,0 +1,19 @@
+{% if property.CType %}\
+@property (readwrite, assign) ${property.CType} ${property.name};
+{% if options['suppressAccessorDeclarations'] == False %}\
+- (${property.CType})${property.name};
+- (void)set${firstCharCapitalize(property.name)}:(${property.CType})in${firstCharCapitalize(property.name)};
+{% end %}{# if options['suppressAccessorDeclarations'] == False #}\
+@property (readwrite, retain) ${property.CocoaType} *${property.name}Value;
+{% if options['suppressAccessorDeclarations'] == False %}\
+- (${property.CocoaType} *)${property.name}Value;
+- (void)set${firstCharCapitalize(property.name)}Value:(${property.CocoaType} *)in${firstCharCapitalize(property.name)};
+{% end %}{# if options['suppressAccessorDeclarations'] == False #}\
+{% end %}{# if property.CType #}\
+{% if property.CType == None and property.CocoaType %}\
+@property (readwrite, retain) ${property.CocoaType} *${property.name};
+{% if options['suppressAccessorDeclarations'] == False %}\
+- (${property.CocoaType} *)${property.name};
+- (void)set${firstCharCapitalize(property.name)}:(${property.CocoaType} *)in${firstCharCapitalize(property.name)};
+{% end %}{# if options['suppressAccessorDeclarations'] == False #}\
+{% end %}{# if property.CType == None and property.CocoaType #}\

@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+import emogenerator
+import sys
+
+emogenerator.main(sys.argv)

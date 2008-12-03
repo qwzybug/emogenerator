@@ -1,0 +1,48 @@
+{% if property.CType %}\
+@dynamic ${property.name};
+
+- (${property.CType})${property.name}
+{
+return([[self ${property.name}Value] ${property.toCTypeConverter}]);
+}
+
+- (void)set${firstCharCapitalize(property.name)}:(${property.CType})${parameterName}
+{
+[self set${firstCharCapitalize(property.name)}Value:[NSNumber ${property.toCocoaTypeConverter}:${parameterName}]];
+}
+
+@dynamic ${property.name}Value;
+
+- (${property.CocoaType} *)${property.name}Value
+{
+[self willAccessValueForKey:@"${property.name}"];
+${property.CocoaType} *theResult = [self primitiveValueForKey:@"${property.name}"];
+[self didAccessValueForKey:@"${property.name}"];
+return(theResult);
+}
+
+- (void)set${firstCharCapitalize(property.name)}Value:(${property.CocoaType} *)${parameterName}
+{
+[self willChangeValueForKey:@"${property.name}"];
+[self setPrimitiveValue:${parameterName} forKey:@"${property.name}"];
+[self didChangeValueForKey:@"${property.name}"];
+}
+{% end %}{# if property.CType #}\
+{% if property.CType == None and property.CocoaType %}\
+@dynamic ${property.name};
+
+- (${property.CocoaType} *)${property.name}
+{
+[self willAccessValueForKey:@"${property.name}"];
+${property.CocoaType} *theResult = [self primitiveValueForKey:@"${property.name}"];
+[self didAccessValueForKey:@"${property.name}"];
+return(theResult);
+}
+
+- (void)set${firstCharCapitalize(property.name)}:(${property.CocoaType} *)in${firstCharCapitalize(property.name)}
+{
+[self willChangeValueForKey:@"${property.name}"];
+[self setPrimitiveValue:${parameterName} forKey:@"${property.name}"];
+[self didChangeValueForKey:@"${property.name}"];
+}
+{% end %}{# if property.CType == None and property.CocoaType #}\

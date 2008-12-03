@@ -1,0 +1,24 @@
+{% choose property.isToMany %}\
+{% when True %}\
+- (NSMutableSet *)${property.name}
+{
+return([self mutableSetValueForKey:@"${property.name}"]);
+}
+{% end %}{# when True #}\
+{% when False %}\
+- (${property.destinationEntityClassNames} *)${property.name}
+{
+[self willAccessValueForKey:@"${property.name}"];
+${property.destinationEntityClassNames} *theResult = [self primitiveValueForKey:@"${property.name}"];
+[self didAccessValueForKey:@"${property.name}"];
+return(theResult);
+}
+
+- (void)set${firstCharCapitalize(property.name)}:(${property.destinationEntityClassNames} *)in${firstCharCapitalize(property.name)}
+{
+[self willChangeValueForKey:@"${property.name}"];
+[self setPrimitiveValue:in${firstCharCapitalize(property.name)} forKey:@"${property.name}"];
+[self didChangeValueForKey:@"${property.name}"];
+}
+{% end %}{# when False #}\
+{% end %}{# choose property.isToMany #}\
