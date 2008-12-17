@@ -1,5 +1,3 @@
-from ez_setup import use_setuptools
-use_setuptools()
 
 from setuptools import setup, find_packages
 
@@ -7,8 +5,7 @@ setup(
 	name = 'emogenerator',
 	version = '0.1dev',
 
-# 	install_requires = ['genshi >= 0.5'], # 'pyobjc',
-# 	install_requires = ['genshi >= 0.5', 'pyobjc'],
+	install_requires = ['genshi >= 0.5'], # 'pyobjc',
 	packages = find_packages(exclude = [ 'ez_setup', 'tests' ]),
 	package_data = { '': ['templates/*.genshi'] },
 	include_package_data = True,
