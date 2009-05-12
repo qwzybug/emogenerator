@@ -17,8 +17,6 @@ import Foundation
 
 import genshi.template
 
-# easy_install http://svn.edgewall.org/repos/genshi/trunk/
-
 def main(args):
 	def store_open_file(option, opt_str, value, parser, *args, **kwargs):
 		if value == '-':
@@ -28,7 +26,7 @@ def main(args):
 		setattr(parser.values, option.dest, theFile)
 
 	theUsage = '''%prog [options] [INPUT]'''
-	theVersion = '%prog 0.1'
+	theVersion = '%prog 0.1.3'
 
 	# If no explicit path to momc is set ask 'which' for it.
 	theDefaultMomcPath = None

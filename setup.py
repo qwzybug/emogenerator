@@ -3,17 +3,17 @@ from setuptools import setup, find_packages
 
 setup(
 	name = 'emogenerator',
-	version = '0.1dev',
+	version = '0.1.3dev',
 
-	install_requires = ['genshi >= 0.5'], # 'pyobjc',
+	install_requires = ['genshi >= 0.5'],
 	packages = find_packages(exclude = [ 'ez_setup', 'tests' ]),
-	package_data = { '': ['templates/*.genshi'] },
+	package_data = { '': ['templates/*'] },
 	include_package_data = True,
 	scripts = ['scripts/emogenerator'],
 	zip_safe = True,
 
 	author = 'Jonathan Wight',
-	author_email = 'jwight@mqc.com',
+	author_email = 'jwight@mac.com',
 	classifiers = [
 		'Development Status :: 3 - Alpha',
 		'Environment :: MacOS X :: Cocoa',
@@ -28,7 +28,7 @@ setup(
 	license = 'BSD License',
 	long_description = file('README.txt').read(),
 	platform = 'Mac OS X',
-	url = 'http://toxicsoftware.com/link/emogenerator',
+	url = 'http://bitbucket.org/schwa/emogenerator/overview/',
 
 # 	entry_points={
 # 	'console_scripts': ['vkr = virtualkeyring:main'],
