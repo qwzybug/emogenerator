@@ -14,10 +14,10 @@ ${property.destinationEntityClassNames} *theResult = [self primitiveValueForKey:
 return(theResult);
 }
 
-- (void)set${firstCharCapitalize(property.name)}:(${property.destinationEntityClassNames} *)in${firstCharCapitalize(property.name)}
+- (void)set${C(property.name)}:(${property.destinationEntityClassNames} *)in${C(property.name)}
 {
 [self willChangeValueForKey:@"${property.name}"];
-[self setPrimitiveValue:in${firstCharCapitalize(property.name)} forKey:@"${property.name}"];
+[self setPrimitiveValue:in${C(property.name)} forKey:@"${property.name}"];
 [self didChangeValueForKey:@"${property.name}"];
 }
 {% end %}{# when False #}\

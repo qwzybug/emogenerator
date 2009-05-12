@@ -19,7 +19,7 @@
 #pragma mark begin emogenerator accessors
 
 {% for property in entity.properties %}\
-{% with parameterName = 'in' + firstCharCapitalize(property.name) %}\
+{% with parameterName = 'in' + C(property.name) %}\
 {% choose property.type %}\
 {% when 'NSAttributeDescription' %}\
 {% include attribute.m.genshi %}\
@@ -28,9 +28,9 @@
 {% include relationship.m.genshi %}\
 {% end %}{# when 'NSRelationshipDescription' #}\
 {% end %}{# choose property.type #}\
-{% end %}{# with parameterName = 'in' + firstCharCapitalize(property.name) #}\
+{% end %}{# with parameterName = 'in' + C(property.name) #}\
 
 {% end %}{# for property in entity.properties #}\
-#pragma mark emogenerator end accessors
+#pragma mark end emogenerator accessors
 
 @end

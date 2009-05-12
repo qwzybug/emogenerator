@@ -26,7 +26,7 @@ def main(args):
 		setattr(parser.values, option.dest, theFile)
 
 	theUsage = '''%prog [options] [INPUT]'''
-	theVersion = '%prog 0.1.3'
+	theVersion = '%prog 0.1.5'
 
 	# If no explicit path to momc is set ask 'which' for it.
 	theDefaultMomcPath = None
@@ -151,7 +151,7 @@ def emogenerator(options, inArguments):
 	theLoader = genshi.template.TemplateLoader(options.template)
 
 	theContext = dict(
-		firstCharCapitalize = lambda X:X[0].upper() + X[1:],
+		C = lambda X:X[0].upper() + X[1:],
 		author = Foundation.NSFullUserName(),
 		date = datetime.datetime.now().strftime('%x'),
 		year = datetime.datetime.now().year,

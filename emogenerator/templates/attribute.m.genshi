@@ -6,9 +6,9 @@
 return([[self ${property.name}Value] ${property.toCTypeConverter}]);
 }
 
-- (void)set${firstCharCapitalize(property.name)}:(${property.CType})${parameterName}
+- (void)set${C(property.name)}:(${property.CType})${parameterName}
 {
-[self set${firstCharCapitalize(property.name)}Value:[NSNumber ${property.toCocoaTypeConverter}:${parameterName}]];
+[self set${C(property.name)}Value:[NSNumber ${property.toCocoaTypeConverter}:${parameterName}]];
 }
 
 @dynamic ${property.name}Value;
@@ -21,7 +21,7 @@ ${property.CocoaType} *theResult = [self primitiveValueForKey:@"${property.name}
 return(theResult);
 }
 
-- (void)set${firstCharCapitalize(property.name)}Value:(${property.CocoaType} *)${parameterName}
+- (void)set${C(property.name)}Value:(${property.CocoaType} *)${parameterName}
 {
 [self willChangeValueForKey:@"${property.name}"];
 [self setPrimitiveValue:${parameterName} forKey:@"${property.name}"];
@@ -39,7 +39,7 @@ ${property.CocoaType} *theResult = [self primitiveValueForKey:@"${property.name}
 return(theResult);
 }
 
-- (void)set${firstCharCapitalize(property.name)}:(${property.CocoaType} *)in${firstCharCapitalize(property.name)}
+- (void)set${C(property.name)}:(${property.CocoaType} *)in${C(property.name)}
 {
 [self willChangeValueForKey:@"${property.name}"];
 [self setPrimitiveValue:${parameterName} forKey:@"${property.name}"];
