@@ -75,7 +75,11 @@ def main(args):
 	if theOptions.input == None and len(theArguments) > 0:
 		theOptions.input = theArguments.pop(0)
 
-	emogenerator(theOptions, theArguments)
+	try:
+		emogenerator(theOptions, theArguments)
+	except Exception, e:
+		logging.error('Error: %s' % str(e))
+		sys.exit(1)
 
 def emogenerator(options, inArguments):
 	# If we don't have an input file lets try and find one in the cwd
@@ -88,9 +92,11 @@ def emogenerator(options, inArguments):
 		if files:
 			options.input = files[0]
 	if options.input == None:
-		options.input = glob.glob('*.mom')[0]
-
-
+		files = glob.glob('*.mom')
+		if files:
+			options.input = files[0]
+	if options.input == None:
+		raise Exception('Could not find a data model file.')
 
 	# If we still don't have an input file we need to bail.
 	if not os.path.exists(options.input):
