@@ -1,6 +1,8 @@
 
 from setuptools import setup, find_packages
 
+# http://docs.python.org/distutils/setupscript.html#additional-meta-data
+
 setup(
 	name = 'emogenerator',
 	version = '0.1.6dev',
@@ -11,7 +13,6 @@ setup(
 	include_package_data = True,
 	scripts = ['scripts/emogenerator'],
 	zip_safe = True,
-
 	author = 'Jonathan Wight',
 	author_email = 'jwight@mac.com',
 	classifiers = [
@@ -28,7 +29,7 @@ setup(
 	license = 'BSD License',
 	long_description = file('README.txt').read(),
 	platform = 'Mac OS X',
-	url = 'http://bitbucket.org/schwa/emogenerator/overview/',
+	url = 'http://bitbucket.org/schwa/emogenerator/',
 
 # 	entry_points={
 # 	'console_scripts': ['vkr = virtualkeyring:main'],
