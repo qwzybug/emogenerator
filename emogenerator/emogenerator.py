@@ -26,7 +26,7 @@ def main(args):
 		setattr(parser.values, option.dest, theFile)
 
 	theUsage = '''%prog [options] [INPUT]'''
-	theVersion = '%prog 0.1.5'
+	theVersion = '%prog 0.1.6'
 
 	# If no explicit path to momc is set ask 'which' for it.
 	theDefaultMomcPath = None
