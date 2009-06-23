@@ -18,6 +18,7 @@ import Foundation
 import genshi.template
 
 def main(args):
+
 	def store_open_file(option, opt_str, value, parser, *args, **kwargs):
 		if value == '-':
 			theFile = option.default
@@ -26,7 +27,7 @@ def main(args):
 		setattr(parser.values, option.dest, theFile)
 
 	theUsage = '''%prog [options] [INPUT]'''
-	theVersion = '%prog 0.1.6'
+	theVersion = '%prog 0.1.7'
 
 	# If no explicit path to momc is set ask 'which' for it.
 	theDefaultMomcPath = None
@@ -37,6 +38,7 @@ def main(args):
 	# If still no momc then look in the known places.
 	if theDefaultMomcPath == None:
 		theMomPaths = [
+			'/Developer/usr/bin/momc',
 			'/Library/Application Support/Apple/Developer Tools/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
 			'/Developer/Library/Xcode/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
 			]
@@ -44,6 +46,9 @@ def main(args):
 			if os.path.exists(thePath):
 				theDefaultMomcPath = thePath
 				break
+		raise Exception('Could not find momc file')
+
+	logging.info('Default momc found at %s' % theDefaultMomcPath)
 
 	theDefaultTemplateDirectory = pkg_resources.resource_filename('emogenerator', 'templates')
 
