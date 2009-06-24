@@ -27,8 +27,8 @@ return(theResult);
 [self setPrimitiveValue:${parameterName} forKey:@"${property.name}"];
 [self didChangeValueForKey:@"${property.name}"];
 }
-{% end %}{# if property.CType #}\
-{% if property.CType == None and property.CocoaType %}\
+{% end %}{# endif property.CType #}\
+{% if property.CType == None and property.CocoaType and options['suppressAccessorDefinitions'] == False %}\
 @dynamic ${property.name};
 
 - (${property.CocoaType} *)${property.name}
@@ -45,4 +45,4 @@ return(theResult);
 [self setPrimitiveValue:${parameterName} forKey:@"${property.name}"];
 [self didChangeValueForKey:@"${property.name}"];
 }
-{% end %}{# if property.CType == None and property.CocoaType #}\
+{% end %}{# endif property.CType == None and property.CocoaType #}\
