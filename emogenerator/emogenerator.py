@@ -19,6 +19,9 @@ import genshi.template
 
 def main(args):
 
+	logging.info('Running %s' % __name__)
+
+
 	def store_open_file(option, opt_str, value, parser, *args, **kwargs):
 		if value == '-':
 			theFile = option.default
@@ -80,11 +83,14 @@ def main(args):
 	if theOptions.input == None and len(theArguments) > 0:
 		theOptions.input = theArguments.pop(0)
 
-	try:
+	if True:
 		emogenerator(theOptions, theArguments)
-	except Exception, e:
-		logging.error('Error: %s' % str(e))
-		sys.exit(1)
+	else:
+		try:
+			emogenerator(theOptions, theArguments)
+		except Exception, e:
+			logging.error('Error: %s' % str(e))
+			sys.exit(1)
 
 def emogenerator(options, inArguments):
 	# If we don't have an input file lets try and find one in the cwd
@@ -107,7 +113,11 @@ def emogenerator(options, inArguments):
 	if not os.path.exists(options.input):
 		raise Exception('Input file doesnt exist at %s' % options.input)
 
+	logging.info('Using \'%s\'' % options.input)
+
 	options.input_type = os.path.splitext(options.input)[1][1:]
+	if options.input_type[-1] == '/':
+		options.input_type = options.input_type[:-1]
 	if options.input_type not in ['mom', 'xcdatamodel', 'xcdatamodeld']:
 		raise Exception('Input file is not a .mom or a .xcdatamodel. Why are you trying to trick me?')
 
@@ -128,6 +138,8 @@ def emogenerator(options, inArguments):
 		}
 
 	if options.input_type in ['xcdatamodel', 'xcdatamodeld']:
+		if not os.path.exists(options.momcpath):
+			raise Exception('Cannot find momc at \'%s\'' % options.momcpath)
 		logging.info('Using momc at \'%s\'', options.momcpath)
 		# Create a place to put the generated mom file
 		theTempDirectory = tempfile.mkdtemp()
@@ -163,6 +175,7 @@ def emogenerator(options, inArguments):
 		organizationName = '__MyCompanyName__',
 		options = dict(
 			suppressAccessorDeclarations = True,
+			suppressAccessorDefinitions = True,
 			),
 		)
 
