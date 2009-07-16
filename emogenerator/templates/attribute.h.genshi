@@ -4,16 +4,16 @@
 - (${property.CType})${property.name};
 - (void)set${C(property.name)}:(${property.CType})in${C(property.name)};
 {% end %}{# endif options['suppressAccessorDeclarations'] == False #}\
-@property (readwrite, retain) ${property.CocoaType} *${property.name}Value;
+@property (readwrite, retain) ${property.CocoaType}${property.name}Value;
 {% if options['suppressAccessorDeclarations'] == False %}\
-- (${property.CocoaType} *)${property.name}Value;
-- (void)set${C(property.name)}Value:(${property.CocoaType} *)in${C(property.name)};
+- (${property.CocoaType})${property.name}Value;
+- (void)set${C(property.name)}Value:(${property.CocoaType})in${C(property.name)};
 {% end %}{# endif options['suppressAccessorDeclarations'] == False #}\
 {% end %}{# endif property.CType #}\
 {% if property.CType == None and property.CocoaType %}\
-@property (readwrite, retain) ${property.CocoaType} *${property.name};
+@property (readwrite, retain) ${property.CocoaType}${property.name};
 {% if options['suppressAccessorDeclarations'] == False %}\
-- (${property.CocoaType} *)${property.name};
-- (void)set${C(property.name)}:(${property.CocoaType} *)in${C(property.name)};
+- (${property.CocoaType})${property.name};
+- (void)set${C(property.name)}:(${property.CocoaType})in${C(property.name)};
 {% end %}{# endif options['suppressAccessorDeclarations'] == False #}\
 {% end %}{# endif property.CType == None and property.CocoaType #}\

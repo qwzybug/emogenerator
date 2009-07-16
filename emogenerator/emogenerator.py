@@ -125,16 +125,17 @@ def emogenerator(options, inArguments):
 
 	# Set up a list of CoreData attribute types to Cocoa classes/C types. In theory this could be user configurable, but I don't see the need.
 	theTypenamesByAttributeType = {
-		CoreData.NSStringAttributeType: dict(cocoaType = 'NSString'),
-		CoreData.NSDateAttributeType: dict(cocoaType = 'NSDate'),
-		CoreData.NSBinaryDataAttributeType: dict(cocoaType = 'NSData'),
-		CoreData.NSDecimalAttributeType: dict(cocoaType = 'NSDecimalNumber'),
-		CoreData.NSInteger16AttributeType: dict(cocoaType = 'NSNumber', ctype = 'short', toCTypeConverter = 'shortValue', toCocoaTypeConverter = 'numberWithShort'),
-		CoreData.NSInteger32AttributeType: dict(cocoaType = 'NSNumber', ctype = 'int', toCTypeConverter = 'intValue', toCocoaTypeConverter = 'numberWithInt'),
-		CoreData.NSInteger64AttributeType: dict(cocoaType = 'NSNumber', ctype = 'long long', toCTypeConverter = 'longLongValue', toCocoaTypeConverter = 'numberWithLongLong'),
-		CoreData.NSDoubleAttributeType: dict(cocoaType = 'NSNumber', ctype = 'double', toCTypeConverter = 'doubleValue', toCocoaTypeConverter = 'numberWithDouble'),
-		CoreData.NSFloatAttributeType: dict(cocoaType = 'NSNumber', ctype = 'float', toCTypeConverter = 'floatValue', toCocoaTypeConverter = 'numberWithFloat'),
-		CoreData.NSBooleanAttributeType: dict(cocoaType = 'NSNumber', ctype = 'BOOL', toCTypeConverter = 'boolValue', toCocoaTypeConverter = 'numberWithBool'),
+		CoreData.NSStringAttributeType: dict(cocoaType = 'NSString *'),
+		CoreData.NSDateAttributeType: dict(cocoaType = 'NSDate *'),
+		CoreData.NSBinaryDataAttributeType: dict(cocoaType = 'NSData *'),
+		CoreData.NSDecimalAttributeType: dict(cocoaType = 'NSDecimalNumber *'),
+		CoreData.NSInteger16AttributeType: dict(cocoaType = 'NSNumber *', ctype = 'short', toCTypeConverter = 'shortValue', toCocoaTypeConverter = 'numberWithShort'),
+		CoreData.NSInteger32AttributeType: dict(cocoaType = 'NSNumber *', ctype = 'int', toCTypeConverter = 'intValue', toCocoaTypeConverter = 'numberWithInt'),
+		CoreData.NSInteger64AttributeType: dict(cocoaType = 'NSNumber *', ctype = 'long long', toCTypeConverter = 'longLongValue', toCocoaTypeConverter = 'numberWithLongLong'),
+		CoreData.NSDoubleAttributeType: dict(cocoaType = 'NSNumber *', ctype = 'double', toCTypeConverter = 'doubleValue', toCocoaTypeConverter = 'numberWithDouble'),
+		CoreData.NSFloatAttributeType: dict(cocoaType = 'NSNumber *', ctype = 'float', toCTypeConverter = 'floatValue', toCocoaTypeConverter = 'numberWithFloat'),
+		CoreData.NSBooleanAttributeType: dict(cocoaType = 'NSNumber *', ctype = 'BOOL', toCTypeConverter = 'boolValue', toCocoaTypeConverter = 'numberWithBool'),
+		CoreData.NSTransformableAttributeType: dict(cocoaType = 'id '),
 		}
 
 	if options.input_type in ['xcdatamodel', 'xcdatamodeld']:
@@ -224,7 +225,13 @@ def emogenerator(options, inArguments):
 
 				theTypenameByAttributeType = theTypenamesByAttributeType[thePropertyDescription.attributeType()]
 
-				thePropertyDict['CocoaType'] = theTypenameByAttributeType['cocoaType']
+
+				theCocoaType = theTypenameByAttributeType['cocoaType']
+				if type(theCocoaType) != str:
+					theCocoaType = theCocoaType(thePropertyDescription)
+				thePropertyDict['CocoaType'] = theCocoaType
+
+
 				if 'ctype' in theTypenameByAttributeType:
 					thePropertyDict['CType'] = theTypenameByAttributeType['ctype']
 					thePropertyDict['toCTypeConverter'] = theTypenameByAttributeType['toCTypeConverter']
