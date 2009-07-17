@@ -1,6 +1,5 @@
-{% if property.CType %}\
 @dynamic ${property.name};
-
+{% if property.CType %}\
 - (${property.CType})${property.name}
 {
 return([[self ${property.name}Value] ${property.toCTypeConverter}]);
@@ -28,9 +27,8 @@ return(theResult);
 [self didChangeValueForKey:@"${property.name}"];
 }
 {% end %}{# endif property.CType #}\
-@dynamic ${property.name};
-{% if property.CType == None and property.CocoaType and options['suppressAccessorDefinitions'] == False %}\
-
+{% if property.CType == None and property.CocoaType %}\
+{% if options['suppressAccessorDefinitions'] == False %}\
 - (${property.CocoaType})${property.name}
 {
 [self willAccessValueForKey:@"${property.name}"];
@@ -45,4 +43,5 @@ return(theResult);
 [self setPrimitiveValue:${parameterName} forKey:@"${property.name}"];
 [self didChangeValueForKey:@"${property.name}"];
 }
+{% end %){# if options['suppressAccessorDefinitions'] == False #}\
 {% end %}{# endif property.CType == None and property.CocoaType #}\
