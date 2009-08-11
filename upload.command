@@ -1,5 +1,7 @@
 #!/bin/sh
 
-#python setup.py register bdist_egg upload
+curl -O http://peak.telecommunity.com/dist/ez_setup.py
+
+hg commit -m 'Building release'
 
 python setup.py register sdist upload
