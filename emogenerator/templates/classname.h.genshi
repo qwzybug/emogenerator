@@ -27,6 +27,8 @@
 
 #pragma mark begin emogenerator accessors
 
++ (NSString *)entityName;
+
 // Attributes
 {% for property in entity.attributes %}\
 {% include attribute.h.genshi %}\

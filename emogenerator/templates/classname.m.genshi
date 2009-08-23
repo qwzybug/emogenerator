@@ -18,6 +18,11 @@
 
 #pragma mark begin emogenerator accessors
 
++ (NSString *)entityName
+{
+return(@"${entity.name}");
+}
+
 {% for property in entity.properties %}\
 {% with parameterName = 'in' + C(property.name) %}\
 {% choose property.type %}\
