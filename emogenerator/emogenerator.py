@@ -17,11 +17,10 @@ import Foundation
 
 import genshi.template
 
+logging.basicConfig(level = logging.DEBUG, format = '%(message)s', stream = sys.stderr)
+logger = logging.getLogger()
+
 def main(args):
-
-	logging.info('Running %s' % __name__)
-
-
 	def store_open_file(option, opt_str, value, parser, *args, **kwargs):
 		if value == '-':
 			theFile = option.default
@@ -32,40 +31,13 @@ def main(args):
 	theUsage = '''%prog [options] [INPUT]'''
 	theVersion = '%prog 0.1.11dev'
 
-	# If no explicit path to momc is set ask 'which' for it.
-	theDefaultMomcPath = None
-	theResult, thePath = commands.getstatusoutput('which momc')
-	if theResult == 0:
-		theDefaultMomcPath = thePath
-
-	print theDefaultMomcPath
-
-	# If still no momc then look in the known places.
-	if not theDefaultMomcPath:
-		print 'Searching...'
-		theMomPaths = [
-			'/Developer/usr/bin/momc',
-			'/Library/Application Support/Apple/Developer Tools/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
-			'/Developer/Library/Xcode/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
-			]
-		for thePath in theMomPaths:
-			logging.info('Checking \'%s\' for momc...' % thePath)
-			if os.path.exists(thePath):
-				print('Found!')
-				theDefaultMomcPath = thePath
-				break
-			print('Not Found!')
-
-	if not theDefaultMomcPath:
-		raise Exception('Could not find momc file')
-
-	logging.info('Default momc found at %s' % theDefaultMomcPath)
+	####################################################################
 
 	theDefaultTemplateDirectory = pkg_resources.resource_filename('emogenerator', 'templates')
 
 	parser = optparse.OptionParser(usage=theUsage, version=theVersion)
-	parser.add_option('', '--momc', action='store', dest='momcpath', type='string', metavar='MOMC', default = theDefaultMomcPath,
-		help='The momc compiler program to use when converting xcdatamodel files to mom files (default: \'%s\')' % theDefaultMomcPath)
+	parser.add_option('', '--momc', action='store', dest='momcpath', type='string', metavar='MOMC', default = None,
+		help='The momc compiler program to use when converting xcdatamodel files to mom files (default behavior is to search for a momc program)')
 	parser.add_option('-i', '--input', action='store', dest='input', type='string', metavar='INPUT',
 		help='The input xcdatamodel or mom file (type is inferred by file extension).')
 	parser.add_option('-o', '--output', action='store', dest='output', type='string', default = '', metavar='OUTPUT',
@@ -74,7 +46,7 @@ def main(args):
 		help='Directory containing templates (default: \'%s\'' % theDefaultTemplateDirectory)
 	parser.add_option('-c', '--config', action='store', dest='config', type='string', metavar='CONFIG',
 		help='Path to config plist file (values will be passed to template engine as a dictionary)')
-	parser.add_option('-v', '--verbose', action='store_const', dest='loglevel', const=logging.DEBUG, default=logging.INFO,
+	parser.add_option('-v', '--verbose', action='store_const', dest='loglevel', const=logging.INFO, default=logging.WARNING,
 		help='set the log level to INFO')
 	parser.add_option('', '--loglevel', action='store', dest='loglevel', type='int',
 		help='set the log level, 0 = no log, 10+ = level of logging')
@@ -83,10 +55,51 @@ def main(args):
 
 	(theOptions, theArguments) = parser.parse_args(args = args[1:])
 
-	logging.basicConfig(level = theOptions.loglevel, format = '%(message)s', stream = theOptions.logstream)
+	for theHandler in logger.handlers:
+		logger.removeHandler(theHandler)
 
-	logging.debug(theOptions)
-	logging.debug(theArguments)
+	logger.setLevel(theOptions.loglevel)
+	theHandler = logging.StreamHandler(theOptions.logstream)
+	logger.addHandler(theHandler)
+
+	logger.debug('THIS IS A TEST')
+
+	####################################################################
+
+	theDefaultMomcPath = None
+
+	# If no explicit path to momc is set ask 'which' for it.
+# 	theResult, thePath = commands.getstatusoutput('which momc')
+# 	if theResult == 0:
+# 		theDefaultMomcPath = thePath
+
+	# If still no momc then look in the known places.
+	if not theDefaultMomcPath:
+		theMomPaths = [
+			'/Developer/usr/bin/momc',
+			'/Library/Application Support/Apple/Developer Tools/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
+			'/Developer/Library/Xcode/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
+			]
+		for thePath in theMomPaths:
+			logger.info('Checking \'%s\' for momc...' % thePath)
+			if os.path.exists(thePath):
+				logger.info('... found!')
+				theDefaultMomcPath = thePath
+				break
+			logger.info('... not Found!')
+
+	if not theDefaultMomcPath:
+		raise Exception('Could not find momc file')
+
+	logger.info('Default momc found at %s' % theDefaultMomcPath)
+
+	if theOptions.momcpath == None:
+		theOptions.momcpath = theDefaultMomcPath
+
+	####################################################################
+
+	logger.debug(theOptions)
+	logger.debug(theArguments)
 
 	if theOptions.input == None and len(theArguments) > 0:
 		theOptions.input = theArguments.pop(0)
@@ -97,7 +110,7 @@ def main(args):
 		try:
 			emogenerator(theOptions, theArguments)
 		except Exception, e:
-			logging.error('Error: %s' % str(e))
+			logger.error('Error: %s' % str(e))
 			sys.exit(1)
 
 def emogenerator(options, inArguments):
@@ -121,7 +134,7 @@ def emogenerator(options, inArguments):
 	if not os.path.exists(options.input):
 		raise Exception('Input file doesnt exist at %s' % options.input)
 
-	logging.info('Using \'%s\'' % options.input)
+	logger.info('Using \'%s\'' % options.input)
 
 	options.input_type = os.path.splitext(options.input)[1][1:]
 	if options.input_type[-1] == '/':
@@ -129,7 +142,7 @@ def emogenerator(options, inArguments):
 	if options.input_type not in ['mom', 'xcdatamodel', 'xcdatamodeld']:
 		raise Exception('Input file is not a .mom or a .xcdatamodel. Why are you trying to trick me?')
 
-	logging.info('Processing \'%s\'', options.input)
+	logger.info('Processing \'%s\'', options.input)
 
 	# Set up a list of CoreData attribute types to Cocoa classes/C types. In theory this could be user configurable, but I don't see the need.
 	theTypenamesByAttributeType = {
@@ -149,7 +162,7 @@ def emogenerator(options, inArguments):
 	if options.input_type in ['xcdatamodel', 'xcdatamodeld']:
 		if not os.path.exists(options.momcpath):
 			raise Exception('Cannot find momc at \'%s\'' % options.momcpath)
-		logging.info('Using momc at \'%s\'', options.momcpath)
+		logger.info('Using momc at \'%s\'', options.momcpath)
 		# Create a place to put the generated mom file
 		theTempDirectory = tempfile.mkdtemp()
 		theObjectModelPath = os.path.join(theTempDirectory, 'Output.mom')
@@ -165,9 +178,9 @@ def emogenerator(options, inArguments):
 	if options.template == None:
 		options.template = 'templates'
 
-	logging.info('Using input mom file \'%s\'', theObjectModelPath)
-	logging.info('Using output directory \'%s\'', options.output)
-	logging.info('Using template directory \'%s\'', options.template)
+	logger.info('Using input mom file \'%s\'', theObjectModelPath)
+	logger.info('Using output directory \'%s\'', options.output)
+	logger.info('Using template directory \'%s\'', options.template)
 
 	# Load the managed object model.
 	theObjectModelURL = Foundation.NSURL.fileURLWithPath_(theObjectModelPath)
@@ -207,7 +220,7 @@ def emogenerator(options, inArguments):
 			}
 
 		if theEntityDict['className'] == 'NSManagedObject':
-			logging.info('Skipping entity \'%s\', no custom subclass specified.', theEntityDescription.name())
+			logger.info('Skipping entity \'%s\', no custom subclass specified.', theEntityDescription.name())
 			continue
 
 		if theEntityDescription.superentity():
@@ -228,7 +241,7 @@ def emogenerator(options, inArguments):
 
 			if thePropertyDescription.className() == 'NSAttributeDescription':
 				if thePropertyDescription.attributeType() not in theTypenamesByAttributeType:
-					logging.warning('Did not understand the property type: %d', thePropertyDescription.attributeType())
+					logger.warning('Did not understand the property type: %d', thePropertyDescription.attributeType())
 					continue
 
 				theTypenameByAttributeType = theTypenamesByAttributeType[thePropertyDescription.attributeType()]
