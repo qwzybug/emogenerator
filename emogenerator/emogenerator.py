@@ -38,17 +38,25 @@ def main(args):
 	if theResult == 0:
 		theDefaultMomcPath = thePath
 
+	print theDefaultMomcPath
+
 	# If still no momc then look in the known places.
-	if theDefaultMomcPath == None:
+	if not theDefaultMomcPath:
+		print 'Searching...'
 		theMomPaths = [
 			'/Developer/usr/bin/momc',
 			'/Library/Application Support/Apple/Developer Tools/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
 			'/Developer/Library/Xcode/Plug-ins/XDCoreDataModel.xdplugin/Contents/Resources/momc',
 			]
 		for thePath in theMomPaths:
+			logging.info('Checking \'%s\' for momc...' % thePath)
 			if os.path.exists(thePath):
+				print('Found!')
 				theDefaultMomcPath = thePath
 				break
+			print('Not Found!')
+
+	if not theDefaultMomcPath:
 		raise Exception('Could not find momc file')
 
 	logging.info('Default momc found at %s' % theDefaultMomcPath)
@@ -66,7 +74,7 @@ def main(args):
 		help='Directory containing templates (default: \'%s\'' % theDefaultTemplateDirectory)
 	parser.add_option('-c', '--config', action='store', dest='config', type='string', metavar='CONFIG',
 		help='Path to config plist file (values will be passed to template engine as a dictionary)')
-	parser.add_option('-v', '--verbose', action='store_const', dest='loglevel', const=logging.INFO, default=logging.WARNING,
+	parser.add_option('-v', '--verbose', action='store_const', dest='loglevel', const=logging.DEBUG, default=logging.INFO,
 		help='set the log level to INFO')
 	parser.add_option('', '--loglevel', action='store', dest='loglevel', type='int',
 		help='set the log level, 0 = no log, 10+ = level of logging')
