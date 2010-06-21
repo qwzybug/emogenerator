@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 setup(
 	name = 'emogenerator',
-	version = '0.1.11dev',
+	version = '0.1.12dev',
 
 	install_requires = ['genshi >= 0.5'],
 	packages = find_packages(exclude = [ 'ez_setup', 'tests' ]),

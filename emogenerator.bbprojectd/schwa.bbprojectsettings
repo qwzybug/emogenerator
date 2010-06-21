@@ -4,37 +4,14 @@
 <dict>
 	<key>EmbeddedEditorHidden:schwa</key>
 	<false/>
-	<key>ExpandedEditorWidth:schwa:displays([(0, 0), (1440, 900)])</key>
-	<integer>1015</integer>
+	<key>ExpandedEditorWidth:schwa:displays([(0, 0), (1920, 1200)])</key>
+	<integer>709</integer>
 	<key>ExpandedItems:schwa</key>
 	<array>
 		<string>3C9502B5-E243-48DD-876F-8B2D511CD580</string>
-		<dict>
-			<key>AliasData</key>
-			<data>
-			AAAAAAHSAAIAAQZDb2J3ZWIAAAAAAAAAAAAAAAAAAAAAAAAAAADG
-			SruQSCsAAABb7DcJdGVtcGxhdGVzAAAAAAAAAAAAAAAAAAAAAAAA
-			AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFvs
-			OsZnD7AAAAAAAAAAAP////8AAAkgAAAAAAAAAAAAAAAAAAAADGVt
-			b2dlbmVyYXRvcgAQAAgAAMZK89AAAAARAAgAAMZnR/AAAAABACAA
-			W+w3ACqIYwAqhzIAKhneACoY/wAqGNEACZhiAAB5sQACAFpDb2J3
-			ZWI6VXNlcnM6c2Nod2E6RGV2ZWxvcG1lbnQ6U291cmNlOk1lcmN1
-			cmlhbDpwdWJsaWM6ZW1vZ2VuZXJhdG9yOmVtb2dlbmVyYXRvcjp0
-			ZW1wbGF0ZXMADgAUAAkAdABlAG0AcABsAGEAdABlAHMADwAOAAYA
-			QwBvAGIAdwBlAGIAEgBTVXNlcnMvc2Nod2EvRGV2ZWxvcG1lbnQv
-			U291cmNlL01lcmN1cmlhbC9wdWJsaWMvZW1vZ2VuZXJhdG9yL2Vt
-			b2dlbmVyYXRvci90ZW1wbGF0ZXMAABMAAS8AABUAAgAM//8AAA==
-			</data>
-			<key>FileURL</key>
-			<string>file://localhost/Users/schwa/Development/Source/Mercurial/public/emogenerator/emogenerator/templates/</string>
-			<key>TypeID</key>
-			<string>_CFileLocator</string>
-			<key>Version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>FileFilterID:schwa</key>
-	<integer>21</integer>
+	<string>E51033E9-0EE4-43B0-9B09-472133FEC287</string>
 	<key>OpenDocuments:schwa</key>
 	<array/>
 	<key>ShowInvisibles:schwa</key>
@@ -44,8 +21,8 @@
 	<key>ToolbarVisible:schwa</key>
 	<true/>
 	<key>ViewSplitterPosition:schwa</key>
-	<real>0.18079096078872681</real>
-	<key>WindowFrame:schwa:displays([(0, 0), (1440, 900)])</key>
-	<string>rect(44,0,823,1239)</string>
+	<real>0.18034681677818298</real>
+	<key>WindowFrame:schwa:displays([(0, 0), (1920, 1200)])</key>
+	<string>rect(44,0,1138,865)</string>
 </dict>
 </plist>

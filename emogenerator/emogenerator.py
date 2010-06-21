@@ -29,7 +29,7 @@ def main(args):
 		setattr(parser.values, option.dest, theFile)
 
 	theUsage = '''%prog [options] [INPUT]'''
-	theVersion = '%prog 0.1.11dev'
+	theVersion = '%prog 0.1.12dev'
 
 	####################################################################
 
