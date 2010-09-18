@@ -29,7 +29,7 @@ setup(
 	license = 'BSD License',
 	long_description = file('README.txt').read(),
 	platform = 'Mac OS X',
-	url = 'http://bitbucket.org/schwa/emogenerator/',
+	url = 'http://github.com/schwa/emogenerator',
 
 # 	entry_points={
 # 	'console_scripts': ['vkr = virtualkeyring:main'],
