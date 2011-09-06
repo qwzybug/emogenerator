@@ -1,11 +1,8 @@
 {% choose property.isToMany %}\
 {% when True %}\
-@property (readonly, retain) NSMutableSet *${property.name};
-- (NSMutableSet *)${property.name};
+@property (readonly, nonatomic, retain) NSMutableSet *${property.name};
 {% end %}{# when True #}\
 {% when False %}\
-@property (readwrite, retain) ${property.destinationEntityClassNames} *${property.name};
-- (${property.destinationEntityClassNames} *)${property.name};
-- (void)set${C(property.name)}:(${property.destinationEntityClassNames} *)in${C(property.name)};
+@property (readwrite, nonatomic, retain) ${property.destinationEntityClassNames} *${property.name};
 {% end %}{# when False #}\
 {% end %}{# choose property.isToMany #}\
