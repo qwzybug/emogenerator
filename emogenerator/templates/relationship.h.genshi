@@ -1,6 +1,12 @@
 {% choose property.isToMany %}\
 {% when True %}\
-@property (readonly, nonatomic, retain) NSMutableSet *${property.name};
+@property (readonly, nonatomic, retain) NSSet *${property.name};
+
+- (void)add${property.name.U()}Object:(${property.destinationEntityClassNames} *)value;
+- (void)remove${property.name.U()}Object:(${property.destinationEntityClassNames} *)value;
+- (void)add${property.name.U()}:(NSSet *)values;
+- (void)remove${property.name.U()}:(NSSet *)values;
+
 {% end %}{# when True #}\
 {% when False %}\
 @property (readwrite, nonatomic, retain) ${property.destinationEntityClassNames} *${property.name};

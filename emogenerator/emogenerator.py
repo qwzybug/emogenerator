@@ -20,6 +20,10 @@ import genshi.template
 logging.basicConfig(level = logging.DEBUG, format = '%(message)s', stream = sys.stderr)
 logger = logging.getLogger()
 
+class MyString(unicode):
+    def U(self):
+        return self[0].upper() + self[1:]
+
 def main(args):
 	def store_open_file(option, opt_str, value, parser, *args, **kwargs):
 		if value == '-':
@@ -234,8 +238,8 @@ def emogenerator(options, inArguments):
 			# This dictionary describes the property and is appended to the entity dictionary we created earlier.
 			thePropertyDict = {
 				'property': thePropertyDescription,
-				'name': thePropertyDescription.name(),
-				'type': thePropertyDescription.className(),
+				'name': MyString(thePropertyDescription.name()),
+				'type': MyString(thePropertyDescription.className()),
 				'CType': None,
 				}
 
