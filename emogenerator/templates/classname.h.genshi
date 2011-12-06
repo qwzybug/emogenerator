@@ -22,8 +22,7 @@
 #pragma mark end emogenerator forward declarations
 
 /** ${entity.name} */
-@interface ${entity.className} : ${entity.superClassName} {
-}
+@interface ${entity.className} : ${entity.superClassName}
 
 #pragma mark begin emogenerator accessors
 
@@ -42,3 +41,13 @@
 #pragma mark end emogenerator accessors
 
 @end
+
+#pragma mark -
+
+#pragma mark begin emogenerator relationship accessors
+@interface ${entity.className} (${entity.className}_Relationships)
+{% for property in entity.relationships %}\
+{% include relationship_methods.h.genshi %}\
+{% end %}{# for property in entity.relationships #}\
+@end
+#pragma mark end emogenerator relationship accessors

@@ -295,6 +295,7 @@ def emogenerator(options, inArguments):
 				theNewContent = merge(theNewContent, theCurrentContent, [
 					('#pragma mark begin emogenerator accessors', '#pragma mark end emogenerator accessors'),
 					('#pragma mark begin emogenerator forward declarations', '#pragma mark end emogenerator forward declarations'),
+					('#pragma mark begin emogenerator relationship accessors', '#pragma mark end emogenerator relationship accessors'),
 					])
 				if theNewContent != theCurrentContent:
 					file(theOutputPath, 'w').write(theNewContent)
