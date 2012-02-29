@@ -76,6 +76,12 @@ def main(args):
 # 	theResult, thePath = commands.getstatusoutput('which momc')
 # 	if theResult == 0:
 # 		theDefaultMomcPath = thePath
+	
+	# Ask xcrun where momc is
+	if not theDefaultMomcPath:
+		theResult, thePath = commands.getstatusoutput('xcrun -find momc')
+		if theResult == 0:
+			theDefaultMomcPath = thePath
 
 	# If still no momc then look in the known places.
 	if not theDefaultMomcPath:
